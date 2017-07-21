@@ -43,7 +43,7 @@ class ContentModal extends Component {
   typeLink() {
     return (
       <span onClick={this.openModal}>
-        <a href={this.props.href}>&nbsp;{(() => {
+        <a href={this.props.href}>{(() => {
           switch(this.props.type) {
             case 'gif':
               return <IconPlay/>

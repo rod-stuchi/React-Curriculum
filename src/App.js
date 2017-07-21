@@ -5,25 +5,23 @@ import EducationInfo from './Education-info';
 import KnowledgeInfo from './Knowledge-info';
 import CertificationInfo from './Certification-info';
 import WorkExperienceInfo from './WorkExperience-info';
-import JsonDB from './rodstu-data.json'
+import JsonDB from './data.json'
 
 injectGlobal`
-  ul,li,h1,h2,h3,h4,h5 {
+  ul,li,h1,h2,h3,h4,h5,body {
     padding: 0;
     margin: 0;
+    font-family: 'Roboto', sans-serif;
   }
 
   @media print {
     .noprint {
       display: none;
     }
-    body {
-      transform: scale(1);
-    }
 `;
 
 const Content = styled.div`
-  margin: 30px 50px;
+    margin: 2vh 2vw;
 `;
 
 class App extends Component {

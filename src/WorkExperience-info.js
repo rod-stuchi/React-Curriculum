@@ -1,22 +1,21 @@
 import React, { Component } from 'react';
-import IconInfo     from 'react-icons/lib/fa/info-circle';
-import IconProj     from 'react-icons/lib/fa/folder-open';
-import IconLink     from 'react-icons/lib/fa/external-link';
-import IconGithub   from 'react-icons/lib/fa/github-alt';
-import IconDropbox  from 'react-icons/lib/fa/dropbox';
-import IconCalender from 'react-icons/lib/fa/calendar';
-import v4           from 'uuid/v4';
-import styled       from 'styled-components';
-import ContentModal from './ContentModal';
+import IconInfo             from 'react-icons/lib/fa/info-circle';
+import IconFolder           from 'react-icons/lib/fa/folder-open';
+import IconFolderClosed     from 'react-icons/lib/fa/folder';
+import IconCalender         from 'react-icons/lib/fa/calendar';
+import v4                   from 'uuid/v4';
+import styled               from 'styled-components';
+import ContentModal         from './ContentModal';
+import {Link}               from './String2Html';
 
 const ExperienceDiv = styled.div`
-  padding-bottom: 30px;
+  padding-bottom: 20px;
   h3 {
     margin-bottom: 10px;
     border-bottom: 2px solid #4300e4;
     padding: 0 0 5px 10px;
   }
-  ul {
+  ul.experience {
     margin-left: 10px;
     padding-bottom: 10px;
     li {
@@ -41,18 +40,32 @@ const ExperienceDiv = styled.div`
         }
       }
       ul.projects {
+        padding-bottom: 10px;
         li {
           padding: 5px 0;
+          margin-left: 10px;
           h5 {
+            font-size: 102%;
+            cursor: pointer;
+            line-height: 22px;
+            border-radius: 5px;
+            padding-left: 5px;
             svg {
               color: #565656;
             }
+              &:hover {
+                background: #7f82da;
+              }
+          }
+          div.link-github {
+            margin: 6px 0 4px 15px;
           }
           p {
             font-size: 93%;
-            margin: 0 0 0 6px;
+            margin: 0 0 0 15px;
             line-height: 22px;
-            a {
+          }
+          a {
               color: #0006b5;
               text-decoration: none;
               white-space: nowrap;
@@ -83,41 +96,28 @@ const ExperienceDiv = styled.div`
                   transition: all .15s ease-in-out;
                 }
               }
-            }
           }
         }
       }
     }
   }
 `;
-const Link = (props) => {
-  //https://www.youtube.com/watch?v=WOV0d73ut30&width=1280&height=720
-  if (/\.gif$/.test(props.href)) {
-    return <ContentModal show={false} href={props.href} link={props.children} type="gif"/>
-  } else if (/\.jpg$/.test(props.href)) {
-    return <ContentModal show={false} href={props.href} link={props.children} type="jpg"/>
-  } else if (/^https:\/\/github.com\//.test(props.href)) {
-    return <a target="_blank" href={props.href}>&nbsp;<IconGithub/> {props.children}</a>
-  } else if (/^https:\/\/www.youtube.com/.test(props.href)) {
-    return <ContentModal show={false} href={props.href} link={props.children} type="youtube"/>
-  } else if (/^https:\/\/www.dropbox.com/.test(props.href)) {
-    return <a target="_blank" href={props.href}>&nbsp;<IconDropbox/> {props.children}</a>
-  } else {
-    return <a target="_blank" href={props.href}>&nbsp;<IconLink/> {props.children}</a>
-  }
-}
 
 const string2Date = (date) => {
   let d = date.split('-').map(x => parseInt(x, 10));
-  return new Date(d[0], d[1] -1, d[2]);
+  return d.length === 3 ? new Date(d[0], d[1] -1, d[2]) : undefined;
 }
 
 const getWorkPeriod = (date1, date2) => {
   let month = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
   let dt1 = string2Date(date1);
   let dt2 = string2Date(date2);
-  let p = new Date(dt2.getTime() - dt1.getTime());
 
+  if (!dt2) {
+    return `${month[dt1.getMonth()]}/${dt1.getFullYear()} - ${date2}`;
+  }
+
+  let p = new Date(dt2.getTime() - dt1.getTime());
   let _range = `${month[dt1.getMonth()]}/${dt1.getFullYear()} - ${month[dt2.getMonth()]}/${dt2.getFullYear()}`;
 
   let m = (p.getMonth() + 1);
@@ -132,103 +132,55 @@ const getWorkPeriod = (date1, date2) => {
                       )
     : m === 0
       ? ''
-      : `e ${m} ${_m}`;
+      : `${m} ${_m}`;
 
   return `${_range} (${_rangeLn})`;
 }
 
-String.prototype.urlTemplate = function() {
-  return this.valueOf().split(/(<[^|]+\|[^>]+>)/g)
-    .map(x =>
-      /^<[^>]+>/.test(x)
-      ? (() => {
-          let m = x.match(/^<([^|]+)\|([^>]+)>/);
-          return (
-            <Link
-              key={v4()} 
-              href={m[2]}>
-              {m[1]}
-            </Link>)
-        })()
-        : x.abbrTemplate()
-    );
+class ProjectItem extends Component {
+  state = { show: true }
+
+  toggleDisplay = (e) => {
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
+    e.preventDefault();
+    this.setState(prevState => {
+      return { show: !prevState.show }
+    });
+  }
+
+  render() {
+    let x = this.props.data;
+    return (
+      <li >
+        <h5 onClick={this.toggleDisplay}>{this.state.show ? <IconFolder/> : <IconFolderClosed/>} {x.title}</h5>
+        <div style={{display: this.state.show ? 'block' : 'none'}}>
+          {
+            x.hasOwnProperty('github')
+            ? <div className="link-github"> <Link href={"https://github.com/" + x.github}>{x.github}</Link></div>
+            : ''
+          }
+          {
+            x.hasOwnProperty("description") 
+            ? <p>{x.description.breakTemplate()}</p> 
+            : <ul><Projects data={x.descriptions}/></ul>
+          }
+        </div>
+      </li>
+    )
+  }
 }
 
-String.prototype.abbrTemplate = function() {
-  return this.valueOf().split(/(\|\|[^\|]+\|[^\||]+\|\|)/)
-    .map(x =>
-      /^\|\|[^\|]+\|[^\||]+\|\|/.test(x)
-      ? (() => {
-          let m = x.match(/\|\|([^\|]+)\|([^\||]+)\|\|/);
-          return (
-            <abbr
-              title={m[2]}>
-              <span>
-                {m[1]}
-              </span>
-            </abbr>)
-          })()
-      : x.italicTemplate()
-    );
-}
-
-String.prototype.italicTemplate = function() {
-  return this.valueOf().split(/(\*[^\*]+\*)/)
-    .map(x =>
-      /\*[^\*]+\*/.test(x)
-      ? (() => {
-          let m = x.match(/\*([^\*]+)\*/);
-          return (
-            <span
-              style={{fontStyle: 'italic'}}>
-              {m[1]}
-            </span>)
-        })()
-      : x.emphasisTemplate()
-    );
-}
-
-String.prototype.emphasisTemplate = function() {
-  return this.valueOf().split(/(#[^#]+#)/)
-    .map(x =>
-      /#[^#]+#/.test(x)
-      ? (() => {
-          let m = x.match(/#([^#]+)#/);
-          return (
-            <span
-              style={{
-                background   : 'rgb(244, 255, 81)',
-                borderRadius : '5px',
-                padding      : '2px'
-              }} >
-              {m[1]}
-            </span>)
-        })()
-      : x
-    );
-}
-
-String.prototype.breakTemplate = function() {
-  return this.valueOf().split(/(<br>)/)
-    .map(x =>
-      /<br>/.test(x)
-      ? <br />
-      : x.urlTemplate()
-    );
-}
-
-const getProjects = (props) => {
-  return props.map(x => 
-    <li key={v4()}>
-      <h5><IconProj/> {x.title}</h5>
-      {
-        x.hasOwnProperty('github')
-          ? <div> <Link href={"https://github.com/" + x.github}>{x.github}</Link></div>
-          : ''
-      }
-    <p>{x.hasOwnProperty("description") ? x.description.breakTemplate() : <ul>{getProjects(x.descriptions)}</ul>}</p>
-    </li>
-  )
+class Projects extends Component {
+  render() {
+    return (
+      <ul className="projects">
+        {this.props.data.map(x =>
+          <ProjectItem key={v4()} data={x} />
+        )}
+      </ul>
+    )
+  }
 }
 
 const getCompany = (props) => {
@@ -237,8 +189,7 @@ const getCompany = (props) => {
       <table>
         <tbody>
         <tr>
-          <td className="company"><h4>{x.company}</h4></td>
-          <td className="journey"></td>
+          <td colSpan="2" className="company"><h4>{x.company}</h4></td>
         </tr>
         <tr>
           <td className="job-role"><IconInfo/> {x.jobRole}</td>
@@ -246,9 +197,7 @@ const getCompany = (props) => {
         </tr>
         </tbody>
       </table>
-      <ul className="projects">
-        {getProjects(x.projects)}
-      </ul>
+        <Projects data={x.projects} />
     </li>
   )
 }
@@ -259,7 +208,7 @@ class Experience extends Component {
     return (
       <ExperienceDiv>
         <h3>{title}</h3>
-        <ul>
+        <ul className="experience">
           {getCompany(value)}
         </ul>
       </ExperienceDiv>

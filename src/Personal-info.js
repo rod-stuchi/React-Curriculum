@@ -1,9 +1,37 @@
 import React, { Component } from 'react';
 import styled      from  'styled-components';
+import v4          from 'uuid/v4';
 import IconMail    from  'react-icons/lib/fa/envelope-square';
 import IconCell    from  'react-icons/lib/fa/phone-square';
 import IconTwitter from  'react-icons/lib/fa/twitter-square';
 import IconGitHub  from  'react-icons/lib/fa/github-square';
+
+const breakLine = (txt) => {
+  return txt.split(/(<br>)/)
+    .map(x =>
+      /<br>/.test(x)
+      ? <br key={v4()} />
+      : parseLink(x)
+    );
+}
+
+const parseLink = (txt) => {
+  return txt.split(/(<[^|]+\|[^>]+>)/g)
+    .map(x =>
+      /^<[^>]+>/.test(x)
+      ? (() => {
+          let m = x.match(/^<([^|]+)\|([^>]+)>/);
+          return (
+            <a
+              target="_blank"
+              key={v4()}
+              href={m[2]}>
+              {m[2]}
+            </a>)
+        })()
+        : x
+    );
+}
 
 const PersonalHeader = styled.div`
   color: #212121;
@@ -18,6 +46,9 @@ const PersonalHeader = styled.div`
     }
   }
   h5.disclaimer {
+    background: #bdbdbd;
+    padding: 10px;
+    border-radius: 10px;
     margin: 10px 0 0 10px;
   }
   ul.contact {
@@ -69,7 +100,7 @@ class Personal extends Component {
           <li><a href={`https://github.com/${github}`}><IconGitHub/>{github}</a></li>
           <li><a href={`https://twitter.com/${twitter}`}><IconTwitter/>{twitter}</a></li>
         </ul>
-        <h5 className="disclaimer">{disclaimer}</h5>
+        {disclaimer ?  <h5 className="disclaimer">{breakLine(disclaimer)}</h5> : ''}
       </PersonalHeader>
     )
   }
