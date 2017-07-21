@@ -84,6 +84,8 @@ const ExperienceDiv = styled.div`
               }
               svg {
                 transition: all .15s ease-in-out;
+                position: relative;
+                top: -2px;
               }
               &:hover {
                 color: #23007e;

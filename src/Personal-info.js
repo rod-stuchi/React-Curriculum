@@ -61,14 +61,47 @@ const PersonalHeader = styled.div`
         a {
           font-weight: 600;
           color: #212121;
+          text-decoration: none;
+          white-space: nowrap;
+          position: relative;
+          &::before {
+            content: "";
+            position: absolute;
+            width: calc(100% - 23px);
+            height: 1px;
+            bottom: 0;
+            left: 23px;
+            background-color: #23007e;
+            visibility: hidden;
+            transform: scaleX(0);
+            transition: all 0.3s ease-in-out 0s;
+          }
         }
         svg {
           font-size: 130%;
           margin-right: 3px;
           color: #4300e4;
-       }
-      }
+          transition: all .15s ease-in-out;
+        }
+        &:hover {
+          color: #23007e;
+          &::before {
+            visibility: visible;
+            transform: scaleX(1);
+          }
+          svg {
+            transform: scale(1.3);
+            transition: all .15s ease-in-out;
+          }
+        }
+    }
   } 
+  @media screen
+      and (max-width: 768px) {
+        ul.contact li {
+          display: inherit !important;
+        }
+    }
 `;
 
 class Personal extends Component {
