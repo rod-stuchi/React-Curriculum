@@ -32,7 +32,6 @@ class ContentModal extends Component {
     if (['gif', 'jpg'].indexOf(this.props.type) >= 0) {
       return <img src={this.props.href} alt={this.props.link} />
     } else if ( this.props.type === 'youtube') {
-      // width="640" height="360"
       return (
         <iframe id="ytplayer" type="text/html" style={{width: '80vw', height: 'calc(80vh - 40px)'}}
           src={this.props.href} frameBorder="0" allowFullScreen/>

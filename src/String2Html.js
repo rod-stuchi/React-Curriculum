@@ -45,6 +45,22 @@ String.prototype.abbrTemplate = function() {
               </span>
             </abbr>)
           })()
+      : x.boldTemplate()
+    );
+}
+
+String.prototype.boldTemplate = function() {
+  return this.valueOf().split(/(\*{2}[^\*{2}]+\*{2})/)
+    .map(x =>
+      /\*{2}[^\*{2}]+\*{2}/.test(x)
+      ? (() => {
+          let m = x.match(/\*{2}([^\*{2}]+)\*{2}/);
+          return (
+            <span
+              style={{fontWeight: '800'}}>
+              {m[1]}
+            </span>)
+        })()
       : x.italicTemplate()
     );
 }
