@@ -1,4 +1,4 @@
-import styled               from 'styled-components';
+import styled from 'styled-components';
 
 const ExperienceDiv = styled.div`
   padding-bottom: 20px;

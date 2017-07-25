@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import v4           from  'uuid/v4';
-import IconRArrow   from  'react-icons/lib/fa/arrow-right';
-import EducationDiv from './Education.styled.js';
+import v4                   from 'uuid/v4';
+import IconRArrow           from 'react-icons/lib/fa/arrow-right';
+import EducationDiv         from './Education.styled.js';
 
 const getTable = (props) => {
   return (

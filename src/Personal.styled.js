@@ -1,4 +1,4 @@
-import styled      from  'styled-components';
+import styled from  'styled-components';
 
 const PersonalHeader = styled.div`
   color: #212121;

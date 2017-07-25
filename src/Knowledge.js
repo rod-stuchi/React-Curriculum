@@ -1,8 +1,9 @@
+/*eslint no-useless-escape: "off"*/
 import React, { Component } from 'react';
-import v4          from  'uuid/v4';
-import firstBy     from  'thenby';
-import IconRArrow  from  'react-icons/lib/fa/arrow-right';
-import KnowledgeDiv from './Knowledge.styled.js';
+import v4                   from 'uuid/v4';
+import firstBy              from 'thenby';
+import IconRArrow           from 'react-icons/lib/fa/arrow-right';
+import KnowledgeDiv         from './Knowledge.styled.js';
 
 class Knowledge extends Component {
   render() {

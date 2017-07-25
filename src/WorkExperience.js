@@ -4,8 +4,7 @@ import IconFolder           from 'react-icons/lib/fa/folder-open';
 import IconFolderClosed     from 'react-icons/lib/fa/folder';
 import IconCalender         from 'react-icons/lib/fa/calendar';
 import v4                   from 'uuid/v4';
-import ContentModal         from './ContentModal';
-import {Link}               from './String2Html';
+import {Link, string2Html}  from './String2Html';
 import ExperienceDiv        from './WorkExperience.styled.js';
 
 const string2Date = (date) => {
@@ -67,7 +66,7 @@ class ProjectItem extends Component {
           }
           {
             x.hasOwnProperty("description") 
-            ? <p>{x.description.breakTemplate()}</p> 
+            ? <p>{string2Html(x.description)}</p> 
             : <ul><Projects data={x.descriptions}/></ul>
           }
         </div>

@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component }     from 'react';
 import styled, { injectGlobal } from 'styled-components';
-import PersonalInfo from './Personal-info';
-import EducationInfo from './Education-info';
-import KnowledgeInfo from './Knowledge-info';
-import CertificationInfo from './Certification-info';
-import WorkExperienceInfo from './WorkExperience-info';
-import JsonDB from './data.json'
+import Personal                 from './Personal';
+import Education                from './Education';
+import Knowledge                from './Knowledge';
+import Certification            from './Certification';
+import WorkExperience           from './WorkExperience';
+import JsonDB                   from './data.json'
 
 injectGlobal`
   ul,li,h1,h2,h3,h4,h5,body {
@@ -26,14 +26,20 @@ const Content = styled.div`
 
 class App extends Component {
   render() {
-    let { Personal, Education, Knowledge, Certification, WorkExperience } = JsonDB;
+    let { Personal       : _personal
+        , Education      : _education
+        , Knowledge      : _knowledge
+        , Certification  : _certification
+        , WorkExperience : _workExperience
+        } = JsonDB;
+
     return (
       <Content className="App">
-        <PersonalInfo data={{...Personal}}/>
-        <EducationInfo data={{...Education}}/>
-        <KnowledgeInfo data={{...Knowledge}}/>
-        <CertificationInfo data={{...Certification}}/>
-        <WorkExperienceInfo data={{...WorkExperience}}/>
+        <Personal data={{..._personal}}/>
+        <Education data={{..._education}}/>
+        <Knowledge data={{..._knowledge}}/>
+        <Certification data={{..._certification}}/>
+        <WorkExperience data={{..._workExperience}}/>
       </Content>
     );
   }

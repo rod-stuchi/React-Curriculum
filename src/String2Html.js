@@ -1,21 +1,23 @@
-import React, { Component }     from 'react';
+/*eslint no-useless-escape: "off"*/
+
+import React                    from 'react';
 import IconGithub               from 'react-icons/lib/fa/github-alt';
 import IconDropbox              from 'react-icons/lib/fa/dropbox';
 import IconLink                 from 'react-icons/lib/fa/external-link';
 import v4                       from 'uuid/v4';
 import ContentModal             from './ContentModal';
 
-String.prototype.breakTemplate = function() {
-  return this.valueOf().split(/(<br>)/)
+export const string2Html = (str) => {
+  return str.split(/(<br>)/)
     .map(x =>
       /<br>/.test(x)
       ? <br key={v4()} />
-      : x.urlTemplate()
+      : urlTemplate(x)
     );
 }
 
-String.prototype.urlTemplate = function() {
-  return this.valueOf().split(/(<[^|]+\|[^>]+>)/g)
+const urlTemplate = (str) => {
+  return str.split(/(<[^|]+\|[^>]+>)/g)
     .map(x =>
       /^<[^>]+>/.test(x)
       ? (() => {
@@ -27,12 +29,12 @@ String.prototype.urlTemplate = function() {
               {m[1]}
             </Link>)
         })()
-        : x.abbrTemplate()
+        : abbrTemplate(x)
     );
 }
 
-String.prototype.abbrTemplate = function() {
-  return this.valueOf().split(/(\|\|[^\|]+\|[^\||]+\|\|)/)
+const abbrTemplate = (str) => {
+  return str.split(/(\|\|[^\|]+\|[^\||]+\|\|)/)
     .map(x =>
       /^\|\|[^\|]+\|[^\||]+\|\|/.test(x)
       ? (() => {
@@ -45,12 +47,12 @@ String.prototype.abbrTemplate = function() {
               </span>
             </abbr>)
           })()
-      : x.boldTemplate()
+      : boldTemplate(x)
     );
 }
 
-String.prototype.boldTemplate = function() {
-  return this.valueOf().split(/(\*{2}[^\*{2}]+\*{2})/)
+const boldTemplate = (str) => {
+  return str.split(/(\*{2}[^\*{2}]+\*{2})/)
     .map(x =>
       /\*{2}[^\*{2}]+\*{2}/.test(x)
       ? (() => {
@@ -61,12 +63,12 @@ String.prototype.boldTemplate = function() {
               {m[1]}
             </span>)
         })()
-      : x.italicTemplate()
+      : italicTemplate(x)
     );
 }
 
-String.prototype.italicTemplate = function() {
-  return this.valueOf().split(/(\*[^\*]+\*)/)
+const italicTemplate = (str) => {
+  return str.split(/(\*[^\*]+\*)/)
     .map(x =>
       /\*[^\*]+\*/.test(x)
       ? (() => {
@@ -77,12 +79,12 @@ String.prototype.italicTemplate = function() {
               {m[1]}
             </span>)
         })()
-      : x.emphasisTemplate()
+      : emphasisTemplate(x)
     );
 }
 
-String.prototype.emphasisTemplate = function() {
-  return this.valueOf().split(/(#[^#]+#)/)
+const emphasisTemplate = (str) => {
+  return str.split(/(#[^#]+#)/)
     .map(x =>
       /#[^#]+#/.test(x)
       ? (() => {

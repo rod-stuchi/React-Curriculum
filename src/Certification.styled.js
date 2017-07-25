@@ -1,4 +1,4 @@
-import styled               from 'styled-components';
+import styled from 'styled-components';
 
 const CertificationDiv = styled.div`
   padding-bottom: 30px;
