@@ -74,7 +74,7 @@ const KnowledgeDiv = styled.div`
         padding-top: 15px;
         li {
           border: none !important;
-          font-size: 70%; 
+          font-size: 80%; 
         }
       }
   }

@@ -109,12 +109,12 @@ export const Link = (props) => {
   } else if (/\.jpg$/.test(props.href)) {
     return <ContentModal show={false} href={props.href} link={props.children} type="jpg"/>
   } else if (/^https:\/\/github.com\//.test(props.href)) {
-    return <a target="_blank" href={props.href}><IconGithub/> {props.children}</a>
+    return <a target="_blank" href={props.href}> <IconGithub/> {props.children}</a>
   } else if (/^https:\/\/www.youtube.com/.test(props.href)) {
     return <ContentModal show={false} href={props.href} link={props.children} type="youtube"/>
   } else if (/^https:\/\/www.dropbox.com/.test(props.href)) {
-    return <a target="_blank" href={props.href}><IconDropbox/> {props.children}</a>
+    return <a target="_blank" href={props.href}> <IconDropbox/> {props.children}</a>
   } else {
-    return <a target="_blank" href={props.href}><IconLink/> {props.children}</a>
+    return <a target="_blank" href={props.href}> <IconLink/> {props.children}</a>
   }
 }
