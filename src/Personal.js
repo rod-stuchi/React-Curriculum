@@ -47,20 +47,47 @@ class Personal extends Component {
   }
 
   render() {
-    let {Name, birthDate, nationality, civilStatus, address, cellphone, email, twitter, github, disclaimer} = this.props.data;
+    let {Name
+        ,birthDate
+        ,birthDateSuffix
+        ,nationality
+        ,civilStatus
+        ,address
+        ,cellphone
+        ,email
+        ,twitter
+        ,github
+        ,disclaimer
+        } = this.props.data;
 
     return (
       <PersonalHeader>
         <h1>{Name}</h1>
         <ul className="info">
-          <li>{nationality}, {civilStatus}, {this.getAge(birthDate)} anos</li>
+          <li>{nationality}, {civilStatus}, {this.getAge(birthDate)} {birthDateSuffix}</li>
           <li>{address}</li>
         </ul>
         <ul className="contact">
-          <li><a href={`tel:${cellphone}`}><IconCell/>{cellphone}</a></li>
-          <li><a href={`mailto:${email}`}><IconMail/>{email}</a></li>
-          <li><a href={`https://github.com/${github}`}><IconGitHub/>{github}</a></li>
-          <li><a href={`https://twitter.com/${twitter}`}><IconTwitter/>{twitter}</a></li>
+          {
+            cellphone
+            ? <li><a href={`tel:${cellphone}`}><IconCell/>{cellphone}</a></li> 
+            : ''
+          }
+          {
+            email
+            ? <li><a href={`mailto:${email}`}><IconMail/>{email}</a></li> 
+            : ''
+          }
+          {
+            github
+            ? <li><a href={`https://github.com/${github}`}><IconGitHub/>{github}</a></li>
+            : ''
+          }
+          {
+            twitter
+            ? <li><a href={`https://twitter.com/${twitter}`}><IconTwitter/>{twitter}</a></li>
+            : ''
+          }
         </ul>
         {disclaimer ?  <h5 className="disclaimer">{breakLine(disclaimer)}</h5> : ''}
       </PersonalHeader>
