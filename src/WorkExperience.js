@@ -42,7 +42,11 @@ const getWorkPeriod = (date1, date2) => {
 }
 
 class ProjectItem extends Component {
-  state = { show: true }
+  constructor(props) {
+    super(props);
+    const { collapsed } = props.data;
+    this.state = { show: !collapsed };
+  }
 
   toggleDisplay = (e) => {
     e.stopPropagation();
@@ -65,8 +69,8 @@ class ProjectItem extends Component {
             : ''
           }
           {
-            x.hasOwnProperty("description") 
-            ? <p>{string2Html(x.description)}</p> 
+            x.hasOwnProperty("description")
+            ? <p>{string2Html(x.description)}</p>
             : <ul><Projects data={x.descriptions}/></ul>
           }
         </div>
@@ -87,13 +91,15 @@ class Projects extends Component {
   }
 }
 
-const getCompany = (props) => {
-  return props.sort((x,y) => string2Date(x.period_from).getTime() < string2Date(y.period_from).getTime()).map(x =>
+const sortByDate = (x, y) =>
+  string2Date(x.period_from).getTime() < string2Date(y.period_from).getTime();
+
+const renderCompanies = (x) =>
     <li key={v4()}>
       <table>
         <tbody>
         <tr>
-          <td colSpan="2" className="company"><h4>{x.company}</h4></td>
+          <td colSpan="2" className="company"><h4>{string2Html(x.company)}</h4></td>
         </tr>
         <tr>
           <td className="job-role"><IconInfo/> {x.jobRole}</td>
@@ -103,7 +109,28 @@ const getCompany = (props) => {
       </table>
         <Projects data={x.projects} />
     </li>
-  )
+
+const renderProjects = (x) =>
+    <li key={v4()}>
+      <table>
+        <tbody>
+        <tr>
+          <td colSpan="2" className="company"><h4>{string2Html(x.company)}</h4></td>
+        </tr>
+        <tr>
+        </tr>
+        </tbody>
+      </table>
+        <Projects data={x.projects} />
+    </li>
+
+const getCompany = (props) => {
+  const projects = props.filter(x => !x.period_from);
+  const companies = props.filter(x => !!x.period_from);
+  const companiesRendered = companies.sort((x,y) => sortByDate(x, y)).map(x => renderCompanies(x))
+  const projectsRendered = projects.map(x => renderProjects(x))
+
+  return [...projectsRendered, ... companiesRendered];
 }
 
 class Experience extends Component {

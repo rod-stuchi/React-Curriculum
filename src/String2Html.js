@@ -52,11 +52,11 @@ const abbrTemplate = (str) => {
 }
 
 const boldTemplate = (str) => {
-  return str.split(/(\*{2}[^\*{2}]+\*{2})/)
+  return str.split(/(\*{2}[^\*]+\*{2})/)
     .map(x =>
-      /\*{2}[^\*{2}]+\*{2}/.test(x)
+      /\*{2}[^\*]+\*{2}/.test(x)
       ? (() => {
-          let m = x.match(/\*{2}([^\*{2}]+)\*{2}/);
+          let m = x.match(/\*{2}([^\*]+)\*{2}/);
           return (
             <span
               style={{fontWeight: '800'}}>
