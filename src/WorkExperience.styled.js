@@ -9,6 +9,7 @@ const ExperienceDiv = styled.div`
   }
   ul.experience {
     margin-left: 10px;
+    padding-top: 20px;
     padding-bottom: 10px;
     li {
       list-style-type:none;
@@ -32,9 +33,10 @@ const ExperienceDiv = styled.div`
         }
       }
       ul.projects {
+        padding-top: 10px;
         padding-bottom: 10px;
         li {
-          padding: 5px 0;
+          padding: 10px 0;
           margin-left: 10px;
           h5 {
             font-size: 102%;
