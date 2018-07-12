@@ -58,6 +58,10 @@ injectGlobal`
 const FloatButton = styled.div`
   position: fixed;
   left: calc(50vw + 480px);
+  @media only screen and (max-width: 991px) {
+    left: calc(100vw - 80px);
+    top: 80vh;
+  }
   top: 87.5vh;
   background: #696969;
   cursor: pointer;
@@ -114,7 +118,9 @@ class App extends Component {
         <Certification data={{ ..._certification }} />
         <WorkExperience data={{ ..._workExperience }} {...this.state} />
 
-        <FloatButton onClick={this.handleFloatButtonClick}>
+        <FloatButton
+          onClick={this.handleFloatButtonClick}
+        >
           {this.state.toggleAll ? (
             <IconFolder
               style={{ display: "block", margin: "auto", height: "54px" }}
