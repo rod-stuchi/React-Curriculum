@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const ExperienceDiv = styled.div`
   padding-bottom: 20px;
@@ -12,7 +12,7 @@ const ExperienceDiv = styled.div`
     padding-top: 20px;
     padding-bottom: 10px;
     li {
-      list-style-type:none;
+      list-style-type: none;
       table {
         border-spacing: 0;
         border-collapse: collapse;
@@ -25,7 +25,8 @@ const ExperienceDiv = styled.div`
             color: #565656;
           }
         }
-        td.period, td.journey {
+        td.period,
+        td.journey {
           text-align: right;
         }
         td.company {
@@ -36,20 +37,20 @@ const ExperienceDiv = styled.div`
         padding-top: 10px;
         padding-bottom: 10px;
         li {
-          padding: 10px 0;
+          padding: 5px 0;
           margin-left: 10px;
           h5 {
             font-size: 102%;
             cursor: pointer;
-            line-height: 22px;
+            line-height: 30px;
             border-radius: 5px;
             padding-left: 5px;
             svg {
               color: #565656;
             }
-              &:hover {
-                background: #7f82da;
-              }
+            &:hover {
+              background: #9daff0;
+            }
           }
           div.link-github {
             margin: 6px 0 4px 15px;
@@ -78,7 +79,7 @@ const ExperienceDiv = styled.div`
               transition: all 0.3s ease-in-out 0s;
             }
             svg {
-              transition: all .15s ease-in-out;
+              transition: all 0.15s ease-in-out;
               position: relative;
               top: -2px;
               margin-right: 1px;
@@ -91,7 +92,7 @@ const ExperienceDiv = styled.div`
               }
               svg {
                 transform: scale(1.5);
-                transition: all .15s ease-in-out;
+                transition: all 0.15s ease-in-out;
               }
             }
           }

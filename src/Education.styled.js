@@ -1,4 +1,4 @@
-import styled from  'styled-components';
+import styled from "styled-components";
 
 const EducationDiv = styled.div`
   padding-bottom: 30px;
@@ -25,7 +25,7 @@ const EducationDiv = styled.div`
           padding-top: 10px;
           font-weight: bold;
           vertical-align: top;
-          text-align:right;
+          text-align: right;
         }
         &:nth-child(2) {
           vertical-align: top;
@@ -40,6 +40,7 @@ const EducationDiv = styled.div`
       padding-left: 10px;
       font-size: 90%;
     }
-  }`;
+  }
+`;
 
 export default EducationDiv;

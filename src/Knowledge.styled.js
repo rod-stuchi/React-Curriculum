@@ -1,4 +1,4 @@
-import styled from  'styled-components';
+import styled from "styled-components";
 
 const getLevel = (level, color) => {
   return `
@@ -18,7 +18,7 @@ const getLevel = (level, color) => {
         text-align: center;
       }
     }`;
-}
+};
 
 const KnowledgeDiv = styled.div`
   padding-bottom: 30px;
