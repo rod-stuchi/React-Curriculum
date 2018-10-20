@@ -112,7 +112,7 @@ class Projects extends Component {
 }
 
 const sortByDate = (x, y) =>
-  string2Date(x.period_from).getTime() < string2Date(y.period_from).getTime();
+  string2Date(x.period_from).getTime() < string2Date(y.period_from).getTime() ? 1 : -1;
 
 const renderCompanies = (x, toggleAll) => (
   <li key={v4()}>
